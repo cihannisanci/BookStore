@@ -6,7 +6,7 @@ export default (state=[], action) => {
     case 'CREATE_BOOK':
       return [
         ...state,
-        Object.assign({}, action.book);
+        Object.assign({}, action.book)
       ];
 
     default:

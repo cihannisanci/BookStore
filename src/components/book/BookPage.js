@@ -8,32 +8,27 @@ class Book extends React.Component {
     super(props);
   }
 
-  submitBook(input){
+  submitBook(e,title){
+    e.preventDefault();
+    const input = {newTitle: title.value};
     this.props.createBook(input);
-  }
-
-  handleInput(e){
-
-    //e.preventDefault();
-    const input = e.target.value;
-    this.submitBook(input);
-
-    //e.target.reset();
+    e.target.reset();
   }
 
   render() {
-    return (
+    let bookTitle;
+    return (  
       <div>
         <div>
           <h3>Books</h3>
           <ul>
-            {this.props.books.map((book,index) => <li key={index}>{book.title}</li>)}
+            {this.props.books.map((book,index) => <li key={index}>{book.newTitle}</li>)}
           </ul>
         </div>
         <div>
           <h3>Book Entry Form</h3>
-          <form onSubmit={()=> this.handleInput(e)}>
-            <input type="text" />
+          <form onSubmit={(e)=> this.submitBook(e, bookTitle)}>
+            <input type="text" name="newTitle" ref={e => bookTitle = e}/>
             <input type="submit" value="Submit" />
           </form>
         </div>
@@ -47,7 +42,6 @@ const mapStateToProps = (state, ownProps) => {
     books: state.books
   }
 };
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
